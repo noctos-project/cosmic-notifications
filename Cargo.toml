@@ -57,3 +57,37 @@ lto = "thin"
 # libcosmic = { path = "../libcosmic" }
 # cosmic-config = { path = "../libcosmic/cosmic-config" }
 # cosmic-theme = { path = "../libcosmic/cosmic-theme" }
+
+# NoctOS (illumos): the same patched crates as the other COSMIC forks, taken
+# from sibling checkouts so there is one copy of each fix. cosmic-comp carries
+# the event-loop stack; cosmic-launcher carries pop-os/winit (rev 9567503) and
+# pop-os/softbuffer (tag cosmic-4.0), which this tree pins at the same revs.
+[patch.crates-io]
+calloop = { path = "../cosmic-comp/noctos-vendor/calloop" }
+polling = { path = "../cosmic-comp/noctos-vendor/polling" }
+wayland-backend = { path = "../cosmic-comp/noctos-vendor/wayland-backend" }
+# pulled in by softbuffer (software renderer); rustix has no ioctl opcode
+# helpers on illumos
+drm-ffi = { path = "../cosmic-comp/noctos-vendor/drm-ffi-0.7" }
+
+# NoctOS: pop-os/winit at the pinned rev 9567503 plus an illumos arm for
+# is_main_thread. Every crate of that workspace is redirected so the types
+# stay identical across the dependency graph.
+[patch."https://github.com/pop-os/winit.git"]
+dpi = { path = "../cosmic-launcher/noctos-vendor/winit/dpi" }
+winit = { path = "../cosmic-launcher/noctos-vendor/winit/winit" }
+winit-android = { path = "../cosmic-launcher/noctos-vendor/winit/winit-android" }
+winit-appkit = { path = "../cosmic-launcher/noctos-vendor/winit/winit-appkit" }
+winit-common = { path = "../cosmic-launcher/noctos-vendor/winit/winit-common" }
+winit-core = { path = "../cosmic-launcher/noctos-vendor/winit/winit-core" }
+winit-orbital = { path = "../cosmic-launcher/noctos-vendor/winit/winit-orbital" }
+winit-uikit = { path = "../cosmic-launcher/noctos-vendor/winit/winit-uikit" }
+winit-wayland = { path = "../cosmic-launcher/noctos-vendor/winit/winit-wayland" }
+winit-web = { path = "../cosmic-launcher/noctos-vendor/winit/winit-web" }
+winit-win32 = { path = "../cosmic-launcher/noctos-vendor/winit/winit-win32" }
+winit-x11 = { path = "../cosmic-launcher/noctos-vendor/winit/winit-x11" }
+
+# NoctOS: pop-os/softbuffer (tag cosmic-4.0, c2b2c19) with a POSIX-correct
+# shm_open name.
+[patch."https://github.com/pop-os/softbuffer"]
+softbuffer = { path = "../cosmic-launcher/noctos-vendor/softbuffer" }
