@@ -63,6 +63,9 @@ lto = "thin"
 # the event-loop stack; cosmic-launcher carries pop-os/winit (rev 9567503) and
 # pop-os/softbuffer (tag cosmic-4.0), which this tree pins at the same revs.
 [patch.crates-io]
+# NoctOS: zbus that can identify the peer of a unix socket on illumos, which
+# the private panel <-> daemon connection needs.
+zbus = { path = "../cosmic-comp/noctos-vendor/zbus" }
 # NoctOS: notify with a native illumos backend (event ports), so that
 # config-file changes are noticed as they are on Linux.
 notify = { path = "../cosmic-comp/noctos-vendor/notify" }
